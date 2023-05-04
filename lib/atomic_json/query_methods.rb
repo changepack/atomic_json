@@ -14,6 +14,7 @@ module AtomicJson
           .build(input, touch: true)
           .execute!
         reload.validate
+        input.keys.each { |key| attribute_will_change!(key) }
       end
     end
 
@@ -23,6 +24,7 @@ module AtomicJson
           .build(input, touch: true)
           .execute!
         reload.validate!
+        input.keys.each { |key| attribute_will_change!(key) }
       end
     end
 
@@ -31,6 +33,5 @@ module AtomicJson
         .build(input)
         .execute!
     end
-
   end
 end
