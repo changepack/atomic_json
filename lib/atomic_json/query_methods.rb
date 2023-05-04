@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'atomic_json/query'
+require 'atomic_json/callbacks'
 
 module AtomicJson
   module QueryMethods
@@ -8,7 +9,7 @@ module AtomicJson
     extend ActiveSupport::Concern
 
     def json_update(input)
-      run_callbacks(:save) do
+      Callbacks.run(on: self) do
         Query.new(self)
           .build(input, touch: true)
           .execute!
@@ -17,7 +18,7 @@ module AtomicJson
     end
 
     def json_update!(input)
-      run_callbacks(:save) do
+      Callbacks.run(on: self) do
         Query.new(self)
           .build(input, touch: true)
           .execute!
